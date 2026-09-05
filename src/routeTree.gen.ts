@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FiszkiRouteImport } from './routes/fiszki'
+import { Route as PostepyRouteImport } from './routes/postepy'
 import { Route as PrawdaFalszRouteImport } from './routes/prawda-falsz'
 import { Route as SortowanieRouteImport } from './routes/sortowanie'
 import { Route as SprintRouteImport } from './routes/sprint'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const FiszkiRoute = FiszkiRouteImport.update({
   id: '/fiszki',
   path: '/fiszki',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostepyRoute = PostepyRouteImport.update({
+  id: '/postepy',
+  path: '/postepy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrawdaFalszRoute = PrawdaFalszRouteImport.update({
@@ -56,6 +62,7 @@ const WybierzRoute = WybierzRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
+  '/postepy': typeof PostepyRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
   '/sortowanie': typeof SortowanieRoute
   '/sprint': typeof SprintRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
+  '/postepy': typeof PostepyRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
   '/sortowanie': typeof SortowanieRoute
   '/sprint': typeof SprintRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
+  '/postepy': typeof PostepyRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
   '/sortowanie': typeof SortowanieRoute
   '/sprint': typeof SprintRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/fiszki'
+    | '/postepy'
     | '/prawda-falsz'
     | '/sortowanie'
     | '/sprint'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/fiszki'
+    | '/postepy'
     | '/prawda-falsz'
     | '/sortowanie'
     | '/sprint'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/fiszki'
+    | '/postepy'
     | '/prawda-falsz'
     | '/sortowanie'
     | '/sprint'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FiszkiRoute: typeof FiszkiRoute
+  PostepyRoute: typeof PostepyRoute
   PrawdaFalszRoute: typeof PrawdaFalszRoute
   SortowanieRoute: typeof SortowanieRoute
   SprintRoute: typeof SprintRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/fiszki'
       fullPath: '/fiszki'
       preLoaderRoute: typeof FiszkiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/postepy': {
+      id: '/postepy'
+      path: '/postepy'
+      fullPath: '/postepy'
+      preLoaderRoute: typeof PostepyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prawda-falsz': {
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FiszkiRoute: FiszkiRoute,
+  PostepyRoute: PostepyRoute,
   PrawdaFalszRoute: PrawdaFalszRoute,
   SortowanieRoute: SortowanieRoute,
   SprintRoute: SprintRoute,
