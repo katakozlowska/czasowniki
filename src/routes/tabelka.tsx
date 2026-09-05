@@ -23,7 +23,7 @@ export const Route = createFileRoute("/tabelka")({
     ],
   }),
   validateSearch: (search: Record<string, unknown>) => ({
-    trudne: search["trudne"] === "1" || search["trudne"] === true ? true : undefined,
+    trudne: search["trudne"] === "1" || search["trudne"] === "true" || search["trudne"] === true ? true : undefined,
   }),
   component: Tabelka,
 });
