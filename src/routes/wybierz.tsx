@@ -103,7 +103,7 @@ function WybierzOdpowiedz() {
   const wasRight = answered && checkAnswer(chosen, variants);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-mint to-mint-dark antialiased">
+    <div className="min-h-screen bg-gradient-to-b from-sky to-sky-dark antialiased">
       <div className="relative mx-auto max-w-md px-5 pt-5 pb-14">
         <div className="mb-3 flex items-center justify-between">
           <Link
@@ -130,7 +130,7 @@ function WybierzOdpowiedz() {
 
         {current && (
           <>
-            <div className="popin mb-6 rounded-[28px] bg-cream p-6 text-center shadow-[0_10px_0_var(--mint-dark)]">
+            <div className="popin mb-6 rounded-[28px] bg-cream p-6 text-center shadow-[0_10px_0_var(--sky-dark)]">
               <p className="text-xs font-extrabold tracking-[0.2em] text-ink-soft uppercase">
                 {current.kind === "past" ? "Past simple od:" : "Past participle od:"}
               </p>
@@ -147,7 +147,7 @@ function WybierzOdpowiedz() {
                 let tone =
                   "bg-cream text-ink shadow-[0_6px_0_rgba(0,0,0,0.15)] active:translate-y-1 active:shadow-[0_2px_0_rgba(0,0,0,0.15)]";
                 if (answered && isCorrect)
-                  tone = "bg-mint-dark text-cream ring-4 ring-cream shadow-[0_6px_0_rgba(0,0,0,0.25)]";
+                  tone = "bg-mint text-cream ring-4 ring-cream shadow-[0_6px_0_var(--mint-dark)]";
                 else if (answered && isChosen)
                   tone = "bg-coral text-cream ring-4 ring-coral-dark shadow-[0_6px_0_var(--coral-dark)]";
                 else if (answered) tone = "bg-cream/50 text-ink/40 shadow-[0_6px_0_rgba(0,0,0,0.08)]";
@@ -166,7 +166,7 @@ function WybierzOdpowiedz() {
             </div>
 
             {answered && (
-              <div className="popin mt-6 rounded-2xl bg-cream/95 px-4 py-4 text-center shadow-[0_6px_0_var(--mint-dark)]">
+              <div className="popin mt-6 rounded-2xl bg-cream/95 px-4 py-4 text-center shadow-[0_6px_0_var(--sky-dark)]">
                 <p className="font-display text-lg font-semibold text-ink">
                   {wasRight ? "Brawo! 🎉" : `Poprawna odpowiedź: ${current.correct}`}
                 </p>
