@@ -66,7 +66,7 @@ export function saveProgress(progress: Progress) {
 function withActivity(progress: Progress): Progress {
   const day = today();
   if (progress.lastDay === day) return progress.streak === 0 ? { ...progress, streak: 1 } : progress;
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const yesterday = localDay(new Date(Date.now() - 86400000));
   const streak = progress.lastDay === yesterday ? progress.streak + 1 : 1;
   return { ...progress, streak, lastDay: day };
 }
