@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { displayForms, verbs, type Verb } from "@/data/verbs";
 import { checkAnswer } from "@/lib/check-answer";
-import { shuffle } from "@/lib/wrong-forms";
-import { addPoints } from "@/lib/progress";
+
+import { hardVerbs, recordAnswer, weightedSample } from "@/lib/progress";
 import { RoundSummary } from "@/components/round-summary";
 
 export const Route = createFileRoute("/tabelka")({
@@ -63,9 +63,9 @@ function shownValue(verb: Verb, field: FieldKey): string {
   return displayForms(field === "past" ? verb.past : verb.participle);
 }
 
-function buildRound(): Task[] {
-  return shuffle(verbs)
-    .slice(0, ROUND)
+function buildRound(onlyHard: boolean): Task[] {
+  const pool = onlyHard ? hardVerbs() : verbs;
+  return weightedSample(Math.min(ROUND, Math.max(pool.length, 1)), pool.length ? pool : verbs)
     .map((verb) => ({
       verb,
       given: GIVEN_SETS[Math.floor(Math.random() * GIVEN_SETS.length)]!,
@@ -78,32 +78,29 @@ function Tabelka() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [checked, setChecked] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
+  const [earned, setEarned] = useState(0);
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
-    setTasks(buildRound());
-  }, []);
+    setTasks(buildRound(onlyHard));
+  }, [onlyHard]);
 
   const finished = tasks.length > 0 && index >= tasks.length;
   const current = tasks[index];
-
-  useEffect(() => {
-    if (finished && correctCount > 0) addPoints(correctCount * 10);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finished]);
 
   if (finished) {
     return (
       <RoundSummary
         correct={correctCount}
         total={tasks.length}
-        points={correctCount * 10}
+        points={earned}
         onRestart={() => {
-          setTasks(buildRound());
+          setTasks(buildRound(onlyHard));
           setIndex(0);
           setAnswers({});
           setChecked(false);
           setCorrectCount(0);
+          setEarned(0);
         }}
       />
     );
@@ -121,6 +118,8 @@ function Tabelka() {
     const allGood = toFill.every((field) =>
       checkAnswer(answers[field] ?? "", variantsFor(current.verb, field)),
     );
+    const points = recordAnswer(current.verb.base, allGood);
+    setEarned((prev) => prev + points);
     if (allGood) setCorrectCount((prev) => prev + 1);
   }
 

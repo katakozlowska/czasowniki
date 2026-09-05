@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { displayForms, verbs, type Verb } from "@/data/verbs";
-import { shuffle } from "@/lib/wrong-forms";
-import { addPoints } from "@/lib/progress";
+
+import { recordAnswer, weightedSample } from "@/lib/progress";
 import { RoundSummary } from "@/components/round-summary";
 
 export const Route = createFileRoute("/sortowanie")({
@@ -74,30 +74,27 @@ function Sortowanie() {
   const [index, setIndex] = useState(0);
   const [choice, setChoice] = useState<Bucket | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
+  const [earned, setEarned] = useState(0);
 
   useEffect(() => {
-    setDeck(shuffle(verbs));
+    setDeck(weightedSample(verbs.length));
   }, []);
 
   const finished = deck.length > 0 && index >= deck.length;
   const current = deck[index];
-
-  useEffect(() => {
-    if (finished && correctCount > 0) addPoints(correctCount * 10);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finished]);
 
   if (finished) {
     return (
       <RoundSummary
         correct={correctCount}
         total={deck.length}
-        points={correctCount * 10}
+        points={earned}
         onRestart={() => {
-          setDeck(shuffle(verbs));
+          setDeck(weightedSample(verbs.length));
           setIndex(0);
           setChoice(null);
           setCorrectCount(0);
+          setEarned(0);
         }}
       />
     );
@@ -113,7 +110,10 @@ function Sortowanie() {
   function choose(bucket: Bucket) {
     if (choice || !current) return;
     setChoice(bucket);
-    if (bucket === bucketOf(current)) setCorrectCount((prev) => prev + 1);
+    const ok = bucket === bucketOf(current);
+    const points = recordAnswer(current.base, ok);
+    setEarned((prev) => prev + points);
+    if (ok) setCorrectCount((prev) => prev + 1);
   }
 
   return (

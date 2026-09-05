@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { displayForms, verbs, type Verb } from "@/data/verbs";
-import { addPoints } from "@/lib/progress";
+import { recordAnswer, weightedSample } from "@/lib/progress";
 
 export const Route = createFileRoute("/fiszki")({
   head: () => ({
@@ -39,20 +39,16 @@ function Fiszki() {
   const [unknown, setUnknown] = useState<Verb[]>([]);
 
   useEffect(() => {
-    setDeck(shuffle(verbs));
+    setDeck(weightedSample(verbs.length));
   }, []);
 
   const finished = deck.length > 0 && index >= deck.length;
   const current = deck[index];
   const progressPct = deck.length ? Math.round((index / deck.length) * 100) : 0;
 
-  useEffect(() => {
-    if (finished && known.length > 0) addPoints(known.length * 5);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finished]);
-
   function answer(isKnown: boolean) {
     if (!current) return;
+    recordAnswer(current.base, isKnown);
     if (isKnown) setKnown((prev) => [...prev, current]);
     else setUnknown((prev) => [...prev, current]);
     setFlipped(false);

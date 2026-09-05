@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { verbs, type Verb } from "@/data/verbs";
 import { checkAnswer } from "@/lib/check-answer";
-import { pick, shuffle, wrongForms } from "@/lib/wrong-forms";
-import { addPoints } from "@/lib/progress";
+import { shuffle, wrongForms } from "@/lib/wrong-forms";
+import { recordAnswer, weightedVerb } from "@/lib/progress";
 import { RoundSummary } from "@/components/round-summary";
 
 export const Route = createFileRoute("/wybierz")({
@@ -35,7 +35,7 @@ type Question = {
 };
 
 function buildQuestion(): Question {
-  const verb = pick(verbs);
+  const verb = weightedVerb(verbs);
   const kind: "past" | "participle" = Math.random() < 0.5 ? "past" : "participle";
   const variants = kind === "past" ? verb.past : verb.participle;
   const correct = variants.includes("was/were") ? "was/were" : variants[0]!;
@@ -55,6 +55,7 @@ function WybierzOdpowiedz() {
   const [index, setIndex] = useState(0);
   const [chosen, setChosen] = useState<string | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
+  const [earned, setEarned] = useState(0);
 
   useEffect(() => {
     setQuestions(buildRound());
@@ -63,16 +64,14 @@ function WybierzOdpowiedz() {
   const finished = questions.length > 0 && index >= questions.length;
   const current = questions[index];
 
-  useEffect(() => {
-    if (finished && correctCount > 0) addPoints(correctCount * 10);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finished]);
-
   function choose(option: string) {
     if (chosen || !current) return;
     setChosen(option);
     const variants = current.kind === "past" ? current.verb.past : current.verb.participle;
-    if (checkAnswer(option, variants)) setCorrectCount((prev) => prev + 1);
+    const ok = checkAnswer(option, variants);
+    const points = recordAnswer(current.verb.base, ok);
+    setEarned((prev) => prev + points);
+    if (ok) setCorrectCount((prev) => prev + 1);
   }
 
   function next() {
@@ -85,6 +84,7 @@ function WybierzOdpowiedz() {
     setIndex(0);
     setChosen(null);
     setCorrectCount(0);
+    setEarned(0);
   }
 
   if (finished) {
@@ -92,7 +92,7 @@ function WybierzOdpowiedz() {
       <RoundSummary
         correct={correctCount}
         total={questions.length}
-        points={correctCount * 10}
+        points={earned}
         onRestart={restart}
       />
     );
