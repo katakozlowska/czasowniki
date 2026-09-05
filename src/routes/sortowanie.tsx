@@ -123,7 +123,7 @@ function Sortowanie() {
           <Link
             to="/"
             aria-label="Wróć do menu"
-            className="grid size-11 place-items-center rounded-2xl bg-cream font-display text-lg font-bold text-mint-dark shadow-[0_4px_0_var(--mint-dark)]"
+            className="flex h-11 min-h-11 items-center px-3 rounded-2xl bg-cream font-display text-sm font-bold text-mint-dark shadow-[0_4px_0_var(--mint-dark)]"
           >
             ← Menu
           </Link>

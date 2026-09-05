@@ -59,7 +59,7 @@ function Postepy() {
         <div className="mb-5 flex items-center justify-between">
           <Link
             to="/"
-            className="grid size-11 place-items-center rounded-2xl bg-paper font-display text-lg font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
+            className="flex h-11 min-h-11 items-center px-3 rounded-2xl bg-paper font-display text-sm font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
             aria-label="Wróć do menu"
           >
             ← Menu
