@@ -209,10 +209,6 @@ function Tabelka() {
                           const el = event.currentTarget;
                           setTimeout(() => el.scrollIntoView({ block: "center", behavior: "smooth" }), 300);
                         }}
-                  onFocus={(event) => {
-                    const el = event.currentTarget;
-                    setTimeout(() => el.scrollIntoView({ block: "center", behavior: "smooth" }), 300);
-                  }}
                         enterKeyHint={isLast ? "done" : "next"}
                         placeholder={field === "pl" ? "po polsku…" : "wpisz…"}
                         className={`h-14 w-full rounded-2xl px-4 font-display text-xl font-semibold text-ink outline-none ${
