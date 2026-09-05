@@ -24,8 +24,16 @@ function key() {
   return id ? `czasowniki-data-v1:${id}` : null;
 }
 
+/** Data lokalna urządzenia w formacie RRRR-MM-DD. */
+function localDay(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 function today() {
-  return new Date().toISOString().slice(0, 10);
+  return localDay(new Date());
 }
 
 function notifyChange() {
@@ -58,7 +66,7 @@ export function saveProgress(progress: Progress) {
 function withActivity(progress: Progress): Progress {
   const day = today();
   if (progress.lastDay === day) return progress.streak === 0 ? { ...progress, streak: 1 } : progress;
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const yesterday = localDay(new Date(Date.now() - 86400000));
   const streak = progress.lastDay === yesterday ? progress.streak + 1 : 1;
   return { ...progress, streak, lastDay: day };
 }
