@@ -2,8 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { verbs, type Verb } from "@/data/verbs";
 import { checkAnswer } from "@/lib/check-answer";
-import { pick } from "@/lib/wrong-forms";
-import { addPoints } from "@/lib/progress";
+import { getSprintBest, recordAnswer, setSprintBest, weightedVerb } from "@/lib/progress";
 
 export const Route = createFileRoute("/sprint")({
   head: () => ({
@@ -25,19 +24,11 @@ export const Route = createFileRoute("/sprint")({
 });
 
 const TOTAL = 60;
-const BEST_KEY = "czasowniki-sprint-best-v1";
-
-function loadBest() {
-  if (typeof window === "undefined") return 0;
-  const raw = window.localStorage.getItem(BEST_KEY);
-  const value = raw ? Number.parseInt(raw, 10) : 0;
-  return Number.isFinite(value) ? value : 0;
-}
 
 type Question = { verb: Verb; kind: "past" | "participle" };
 
 function buildQuestion(): Question {
-  return { verb: pick(verbs), kind: Math.random() < 0.5 ? "past" : "participle" };
+  return { verb: weightedVerb(verbs), kind: Math.random() < 0.5 ? "past" : "participle" };
 }
 
 function Sprint() {
@@ -52,7 +43,7 @@ function Sprint() {
   const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    setBest(loadBest());
+    setBest(getSprintBest());
     return () => {
       if (flashTimer.current) clearTimeout(flashTimer.current);
     };
@@ -76,14 +67,8 @@ function Sprint() {
   useEffect(() => {
     if (state !== "done") return;
     setScore((finalScore) => {
-      if (finalScore > 0) addPoints(finalScore * 5);
-      setBest((prevBest) => {
-        if (finalScore > prevBest) {
-          window.localStorage.setItem(BEST_KEY, String(finalScore));
-          return finalScore;
-        }
-        return prevBest;
-      });
+      setSprintBest(finalScore);
+      setBest(getSprintBest());
       return finalScore;
     });
   }, [state]);
@@ -102,6 +87,7 @@ function Sprint() {
     if (state !== "running") return;
     const variants = question.kind === "past" ? question.verb.past : question.verb.participle;
     const ok = checkAnswer(value, variants);
+    recordAnswer(question.verb.base, ok);
     if (ok) setScore((prev) => prev + 1);
 
     if (flashTimer.current) clearTimeout(flashTimer.current);

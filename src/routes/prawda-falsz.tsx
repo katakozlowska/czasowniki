@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { displayForms, verbs, type Verb } from "@/data/verbs";
-import { pick, wrongForm } from "@/lib/wrong-forms";
-import { addPoints } from "@/lib/progress";
+import { wrongForm } from "@/lib/wrong-forms";
+import { recordAnswer, weightedVerb } from "@/lib/progress";
 import { RoundSummary } from "@/components/round-summary";
 
 export const Route = createFileRoute("/prawda-falsz")({
@@ -34,7 +34,7 @@ type Statement = {
 };
 
 function buildStatement(): Statement {
-  const verb = pick(verbs);
+  const verb = weightedVerb(verbs);
   const kind: "past" | "participle" = Math.random() < 0.5 ? "past" : "participle";
   const variants = kind === "past" ? verb.past : verb.participle;
   const wantTrue = Math.random() < 0.5;
@@ -56,6 +56,7 @@ function PrawdaFalsz() {
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState<boolean | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
+  const [earned, setEarned] = useState(0);
 
   useEffect(() => {
     setStatements(buildRound());
@@ -64,15 +65,13 @@ function PrawdaFalsz() {
   const finished = statements.length > 0 && index >= statements.length;
   const current = statements[index];
 
-  useEffect(() => {
-    if (finished && correctCount > 0) addPoints(correctCount * 10);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finished]);
-
   function respond(value: boolean) {
     if (answer !== null || !current) return;
     setAnswer(value);
-    if (value === current.isTrue) setCorrectCount((prev) => prev + 1);
+    const ok = value === current.isTrue;
+    const points = recordAnswer(current.verb.base, ok);
+    setEarned((prev) => prev + points);
+    if (ok) setCorrectCount((prev) => prev + 1);
   }
 
   function next() {
@@ -85,6 +84,7 @@ function PrawdaFalsz() {
     setIndex(0);
     setAnswer(null);
     setCorrectCount(0);
+    setEarned(0);
   }
 
   if (finished) {
@@ -92,7 +92,7 @@ function PrawdaFalsz() {
       <RoundSummary
         correct={correctCount}
         total={statements.length}
-        points={correctCount * 10}
+        points={earned}
         onRestart={restart}
       />
     );

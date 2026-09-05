@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { verbs } from "@/data/verbs";
 import { loadProgress, type Progress } from "@/lib/progress";
+import { activeProfile, type Profile } from "@/lib/profiles";
+import { ProfilePicker } from "@/components/profile-gate";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,11 +25,32 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const [progress, setProgress] = useState<Progress>({ points: 0, streak: 0, lastDay: "" });
+  const [progress, setProgress] = useState<Progress>({
+    points: 0,
+    streak: 0,
+    lastDay: "",
+    sprintBest: 0,
+    stats: {},
+  });
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [switching, setSwitching] = useState(false);
 
   useEffect(() => {
     setProgress(loadProgress());
+    setProfile(activeProfile());
   }, []);
+
+  if (switching) {
+    return (
+      <ProfilePicker
+        onClose={() => {
+          setSwitching(false);
+          setProgress(loadProgress());
+          setProfile(activeProfile());
+        }}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-cream text-ink antialiased">
@@ -37,15 +60,21 @@ function Home() {
 
         <div className="relative mx-auto max-w-md px-5 pt-6 pb-16">
           <div className="mb-8 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="grid size-12 place-items-center rounded-2xl bg-coral font-display text-2xl font-bold text-cream shadow-[0_5px_0_var(--coral-dark)]">
-                C
+            <button
+              onClick={() => setSwitching(true)}
+              className="flex items-center gap-3 text-left"
+              aria-label="Zmień profil"
+            >
+              <span className="grid size-12 place-items-center rounded-2xl bg-coral text-2xl shadow-[0_5px_0_var(--coral-dark)]">
+                {profile?.emoji ?? "🙂"}
               </span>
               <div>
-                <h1 className="font-display text-2xl font-semibold leading-none">Czasowniki</h1>
-                <p className="mt-1 text-xs font-bold text-ink-soft">Kolekcjonuj czasowniki</p>
+                <h1 className="font-display text-2xl font-semibold leading-none">
+                  {profile?.name ?? "Czasowniki"}
+                </h1>
+                <p className="mt-1 text-xs font-bold text-ink-soft">Zmień profil</p>
               </div>
-            </div>
+            </button>
             <span className="grid size-12 place-items-center rounded-full bg-mint font-display text-xl font-bold text-cream shadow-[0_4px_0_var(--mint-dark)]">
               {verbs.length}
             </span>
@@ -63,12 +92,19 @@ function Home() {
               <p className="text-xs font-extrabold tracking-wide text-cream/80 uppercase">
                 Seria dni
               </p>
-              <p className="mt-1 flex items-center gap-1 font-display text-3xl leading-none font-semibold text-cream">
-                <span className="text-2xl">⚡</span>
-                {progress.streak}
+              <p className="mt-1 flex items-center gap-1 font-display text-2xl leading-none font-semibold text-cream">
+                <span className="text-2xl">🔥</span>
+                {progress.streak} {progress.streak === 1 ? "dzień" : "dni"} z rzędu
               </p>
             </div>
           </div>
+
+          <Link
+            to="/postepy"
+            className="mb-8 flex h-16 w-full items-center justify-center gap-2 rounded-2xl bg-sky font-display text-xl font-semibold text-cream shadow-[0_6px_0_var(--sky-dark)] transition-transform active:translate-y-1 active:shadow-[0_2px_0_var(--sky-dark)]"
+          >
+            📊 Moje postępy
+          </Link>
 
           <p className="mb-4 font-display text-xl font-semibold">Wybierz ćwiczenie</p>
 
@@ -133,6 +169,7 @@ function Home() {
 
             <Link
               to="/tabelka"
+              search={{ trudne: undefined }}
               className="flex items-center gap-4 rounded-[28px] bg-paper p-5 shadow-[0_8px_0_var(--sky-dark)] transition-transform active:translate-y-1 active:shadow-[0_4px_0_var(--sky-dark)]"
             >
               <span className="grid size-16 shrink-0 place-items-center rounded-2xl bg-sky font-display text-2xl font-bold text-cream shadow-[0_5px_0_var(--sky-dark)]">
