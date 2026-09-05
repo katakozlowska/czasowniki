@@ -22,6 +22,9 @@ export const Route = createFileRoute("/tabelka")({
       },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    trudne: search["trudne"] === "1" || search["trudne"] === true ? true : undefined,
+  }),
   component: Tabelka,
 });
 
@@ -73,6 +76,8 @@ function buildRound(onlyHard: boolean): Task[] {
 }
 
 function Tabelka() {
+  const { trudne } = Route.useSearch();
+  const onlyHard = trudne === true;
   const [tasks, setTasks] = useState<Task[]>([]);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
