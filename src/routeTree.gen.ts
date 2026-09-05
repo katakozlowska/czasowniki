@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as FiszkiRouteImport } from './routes/fiszki'
 import { Route as PrawdaFalszRouteImport } from './routes/prawda-falsz'
 import { Route as SortowanieRouteImport } from './routes/sortowanie'
+import { Route as SprintRouteImport } from './routes/sprint'
 import { Route as TabelkaRouteImport } from './routes/tabelka'
 import { Route as WybierzRouteImport } from './routes/wybierz'
 
@@ -36,6 +37,11 @@ const SortowanieRoute = SortowanieRouteImport.update({
   path: '/sortowanie',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SprintRoute = SprintRouteImport.update({
+  id: '/sprint',
+  path: '/sprint',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabelkaRoute = TabelkaRouteImport.update({
   id: '/tabelka',
   path: '/tabelka',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/fiszki': typeof FiszkiRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
   '/sortowanie': typeof SortowanieRoute
+  '/sprint': typeof SprintRoute
   '/tabelka': typeof TabelkaRoute
   '/wybierz': typeof WybierzRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/fiszki': typeof FiszkiRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
   '/sortowanie': typeof SortowanieRoute
+  '/sprint': typeof SprintRoute
   '/tabelka': typeof TabelkaRoute
   '/wybierz': typeof WybierzRoute
 }
@@ -69,22 +77,36 @@ export interface FileRoutesById {
   '/fiszki': typeof FiszkiRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
   '/sortowanie': typeof SortowanieRoute
+  '/sprint': typeof SprintRoute
   '/tabelka': typeof TabelkaRoute
   '/wybierz': typeof WybierzRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/fiszki' | '/prawda-falsz' | '/sortowanie' | '/tabelka' | '/wybierz'
+    | '/'
+    | '/fiszki'
+    | '/prawda-falsz'
+    | '/sortowanie'
+    | '/sprint'
+    | '/tabelka'
+    | '/wybierz'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/fiszki' | '/prawda-falsz' | '/sortowanie' | '/tabelka' | '/wybierz'
+    | '/'
+    | '/fiszki'
+    | '/prawda-falsz'
+    | '/sortowanie'
+    | '/sprint'
+    | '/tabelka'
+    | '/wybierz'
   id:
     | '__root__'
     | '/'
     | '/fiszki'
     | '/prawda-falsz'
     | '/sortowanie'
+    | '/sprint'
     | '/tabelka'
     | '/wybierz'
   fileRoutesById: FileRoutesById
@@ -94,6 +116,7 @@ export interface RootRouteChildren {
   FiszkiRoute: typeof FiszkiRoute
   PrawdaFalszRoute: typeof PrawdaFalszRoute
   SortowanieRoute: typeof SortowanieRoute
+  SprintRoute: typeof SprintRoute
   TabelkaRoute: typeof TabelkaRoute
   WybierzRoute: typeof WybierzRoute
 }
@@ -128,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SortowanieRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sprint': {
+      id: '/sprint'
+      path: '/sprint'
+      fullPath: '/sprint'
+      preLoaderRoute: typeof SprintRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tabelka': {
       id: '/tabelka'
       path: '/tabelka'
@@ -150,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   FiszkiRoute: FiszkiRoute,
   PrawdaFalszRoute: PrawdaFalszRoute,
   SortowanieRoute: SortowanieRoute,
+  SprintRoute: SprintRoute,
   TabelkaRoute: TabelkaRoute,
   WybierzRoute: WybierzRoute,
 }
