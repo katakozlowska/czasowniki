@@ -22,7 +22,7 @@ export const Route = createFileRoute("/tabelka")({
       },
     ],
   }),
-  component: Tabelka;
+  component: Tabelka,
 });
 
 const ROUND = 10;
