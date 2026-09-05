@@ -147,10 +147,10 @@ function WybierzOdpowiedz() {
                 let tone =
                   "bg-cream text-ink shadow-[0_6px_0_rgba(0,0,0,0.15)] active:translate-y-1 active:shadow-[0_2px_0_rgba(0,0,0,0.15)]";
                 if (answered && isCorrect)
-                  tone = "bg-mint text-cream ring-4 ring-mint-dark shadow-[0_6px_0_var(--mint-dark)]";
+                  tone = "bg-mint-dark text-cream ring-4 ring-cream shadow-[0_6px_0_rgba(0,0,0,0.25)]";
                 else if (answered && isChosen)
                   tone = "bg-coral text-cream ring-4 ring-coral-dark shadow-[0_6px_0_var(--coral-dark)]";
-                else if (answered) tone = "bg-cream/40 text-ink-soft/60 shadow-[0_6px_0_rgba(0,0,0,0.08)]";
+                else if (answered) tone = "bg-cream/50 text-ink/40 shadow-[0_6px_0_rgba(0,0,0,0.08)]";
 
                 return (
                   <button
