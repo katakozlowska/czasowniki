@@ -19,7 +19,7 @@
  */
 
 @theme inline {
-  --font-display: "Fredoka", system-ui, sans-serif;
+  --font-display: "Nunito", system-ui, sans-serif;
   --font-body: "Nunito", system-ui, sans-serif;
   --font-sans: "Nunito", system-ui, sans-serif;
   --color-cream: var(--cream);
