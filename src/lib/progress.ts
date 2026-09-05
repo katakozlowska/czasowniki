@@ -24,8 +24,16 @@ function key() {
   return id ? `czasowniki-data-v1:${id}` : null;
 }
 
+/** Data lokalna urządzenia w formacie RRRR-MM-DD. */
+function localDay(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 function today() {
-  return new Date().toISOString().slice(0, 10);
+  return localDay(new Date());
 }
 
 function notifyChange() {
