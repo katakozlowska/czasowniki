@@ -194,7 +194,7 @@ function Sprint() {
           <div className="rounded-[28px] bg-cream p-6 text-center shadow-[0_8px_0_var(--sky-dark)]">
             <p className="font-display text-2xl font-semibold text-ink">Sprint 60 sekund</p>
             <p className="mt-2 text-sm font-bold text-ink-soft">
-              Wpisz formę i naciśnij Enter. Ile zdążysz w minutę?
+              Wpisz formę i naciśnij Enter. Jak najwięcej poprawnych odmian w minutę.
             </p>
             <button
               onClick={start}

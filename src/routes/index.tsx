@@ -74,7 +74,7 @@ function Home() {
                   {profile?.name ?? "Czasowniki"}
                 </h1>
                 <p className="mt-1 text-xs font-bold text-ink-soft">Ucz się czasowników nieregularnych</p>
-                <p className="text-xs font-bold text-ink-soft/70">Dotknij, aby zmienić profil</p>
+                <p className="text-xs font-bold text-ink-soft/70">Kliknij, aby zmienić profil</p>
               </div>
             </button>
             <span className="grid size-12 place-items-center rounded-full bg-mint font-display text-xl font-bold text-cream shadow-[0_4px_0_var(--mint-dark)]">
@@ -96,7 +96,7 @@ function Home() {
               </p>
               <p className="mt-1 flex items-center gap-1 font-display text-2xl leading-none font-semibold text-cream">
                 <span className="text-2xl">🔥</span>
-                {dayCount(progress.streak)} z rzędu
+                {dayCount(progress.streak)}
               </p>
             </div>
           </div>
@@ -221,7 +221,7 @@ function Home() {
                   Sprint 60 sekund
                 </span>
                 <span className="mt-0.5 block text-sm font-bold text-ink-soft">
-                  Ile zdążysz w minutę?
+                  Jak najwięcej poprawnych odmian w minutę
                 </span>
               </span>
               <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-sky-dark">
