@@ -173,3 +173,61 @@
     color: var(--color-foreground);
   }
 }
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+  }
+}
+
+@utility floaty {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+@utility floaty-slow {
+  animation: floaty 8s ease-in-out infinite;
+}
+
+@utility popin {
+  animation: popin 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@utility popring {
+  animation: popring 0.9s ease-out infinite;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(3deg);
+  }
+}
+
+@keyframes popin {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes popring {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
