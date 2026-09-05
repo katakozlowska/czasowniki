@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { verbs, type Verb } from "@/data/verbs";
 import { checkAnswer } from "@/lib/check-answer";
+import { pick, shuffle, wrongForms } from "@/lib/wrong-forms";
 import { addPoints } from "@/lib/progress";
 import { RoundSummary } from "@/components/round-summary";
 
