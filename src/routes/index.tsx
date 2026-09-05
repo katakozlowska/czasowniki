@@ -169,6 +169,7 @@ function Home() {
 
             <Link
               to="/tabelka"
+              search={{ trudne: undefined }}
               className="flex items-center gap-4 rounded-[28px] bg-paper p-5 shadow-[0_8px_0_var(--sky-dark)] transition-transform active:translate-y-1 active:shadow-[0_4px_0_var(--sky-dark)]"
             >
               <span className="grid size-16 shrink-0 place-items-center rounded-2xl bg-sky font-display text-2xl font-bold text-cream shadow-[0_5px_0_var(--sky-dark)]">
