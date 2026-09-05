@@ -90,18 +90,54 @@ function Home() {
             </span>
           </Link>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-4">
+            <Link
+              to="/wybierz"
+              className="flex items-center gap-4 rounded-[28px] bg-paper p-5 shadow-[0_8px_0_var(--mint-dark)] transition-transform active:translate-y-1 active:shadow-[0_4px_0_var(--mint-dark)]"
+            >
+              <span className="grid size-16 shrink-0 place-items-center rounded-2xl bg-mint font-display text-2xl font-bold text-cream shadow-[0_5px_0_var(--mint-dark)]">
+                ABC
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-display text-xl leading-tight font-semibold">
+                  Wybierz odpowiedź
+                </span>
+                <span className="mt-0.5 block text-sm font-bold text-ink-soft">
+                  10 pytań, cztery odpowiedzi
+                </span>
+              </span>
+              <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-mint-dark">
+                Start
+              </span>
+            </Link>
+
+            <Link
+              to="/prawda-falsz"
+              className="flex items-center gap-4 rounded-[28px] bg-paper p-5 shadow-[0_8px_0_var(--sun-dark)] transition-transform active:translate-y-1 active:shadow-[0_4px_0_var(--sun-dark)]"
+            >
+              <span className="grid size-16 shrink-0 place-items-center rounded-2xl bg-sun font-display text-2xl font-bold text-ink shadow-[0_5px_0_var(--sun-dark)]">
+                ✓✗
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-display text-xl leading-tight font-semibold">
+                  Prawda czy fałsz
+                </span>
+                <span className="mt-0.5 block text-sm font-bold text-ink-soft">
+                  10 twierdzeń do oceny
+                </span>
+              </span>
+              <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-sun-dark">
+                Start
+              </span>
+            </Link>
+
             <div className="relative overflow-hidden rounded-[28px] bg-locked p-4 opacity-90">
-              <p className="font-display text-base font-semibold text-ink-soft">Quiz</p>
-              <p className="mt-0.5 text-xs font-bold text-ink-soft/70">Wkrótce</p>
-              <span className="absolute right-3 bottom-3 text-lg">🔒</span>
-            </div>
-            <div className="relative overflow-hidden rounded-[28px] bg-locked p-4 opacity-90">
-              <p className="font-display text-base font-semibold text-ink-soft">Gry</p>
+              <p className="font-display text-base font-semibold text-ink-soft">Więcej ćwiczeń</p>
               <p className="mt-0.5 text-xs font-bold text-ink-soft/70">Wkrótce</p>
               <span className="absolute right-3 bottom-3 text-lg">🔒</span>
             </div>
           </div>
+
         </div>
       </section>
     </div>

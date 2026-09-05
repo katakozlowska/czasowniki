@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FiszkiRouteImport } from './routes/fiszki'
+import { Route as PrawdaFalszRouteImport } from './routes/prawda-falsz'
+import { Route as WybierzRouteImport } from './routes/wybierz'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,49 @@ const FiszkiRoute = FiszkiRouteImport.update({
   path: '/fiszki',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrawdaFalszRoute = PrawdaFalszRouteImport.update({
+  id: '/prawda-falsz',
+  path: '/prawda-falsz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WybierzRoute = WybierzRouteImport.update({
+  id: '/wybierz',
+  path: '/wybierz',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
+  '/prawda-falsz': typeof PrawdaFalszRoute
+  '/wybierz': typeof WybierzRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
+  '/prawda-falsz': typeof PrawdaFalszRoute
+  '/wybierz': typeof WybierzRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
+  '/prawda-falsz': typeof PrawdaFalszRoute
+  '/wybierz': typeof WybierzRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/fiszki'
+  fullPaths: '/' | '/fiszki' | '/prawda-falsz' | '/wybierz'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fiszki'
-  id: '__root__' | '/' | '/fiszki'
+  to: '/' | '/fiszki' | '/prawda-falsz' | '/wybierz'
+  id: '__root__' | '/' | '/fiszki' | '/prawda-falsz' | '/wybierz'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FiszkiRoute: typeof FiszkiRoute
+  PrawdaFalszRoute: typeof PrawdaFalszRoute
+  WybierzRoute: typeof WybierzRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FiszkiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prawda-falsz': {
+      id: '/prawda-falsz'
+      path: '/prawda-falsz'
+      fullPath: '/prawda-falsz'
+      preLoaderRoute: typeof PrawdaFalszRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wybierz': {
+      id: '/wybierz'
+      path: '/wybierz'
+      fullPath: '/wybierz'
+      preLoaderRoute: typeof WybierzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FiszkiRoute: FiszkiRoute,
+  PrawdaFalszRoute: PrawdaFalszRoute,
+  WybierzRoute: WybierzRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
