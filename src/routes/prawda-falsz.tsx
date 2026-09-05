@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { displayForms, verbs, type Verb } from "@/data/verbs";
-import { checkAnswer } from "@/lib/check-answer";
 import { pick, wrongForm } from "@/lib/wrong-forms";
 import { addPoints } from "@/lib/progress";
 import { RoundSummary } from "@/components/round-summary";
