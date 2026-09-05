@@ -33,38 +33,17 @@ type Question = {
   options: string[];
 };
 
-function pick<T>(list: T[]): T {
-  return list[Math.floor(Math.random() * list.length)]!;
-}
-
-function shuffle<T>(items: T[]): T[] {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j]!, copy[i]!];
-  }
-  return copy;
-}
-
 function buildQuestion(): Question {
   const verb = pick(verbs);
   const kind: "past" | "participle" = Math.random() < 0.5 ? "past" : "participle";
   const variants = kind === "past" ? verb.past : verb.participle;
   const correct = variants.includes("was/were") ? "was/were" : variants[0]!;
 
-  const pool = verbs
-    .filter((other) => other.base !== verb.base)
-    .flatMap((other) => [other.past[0]!, other.participle[0]!])
-    .filter((form) => !checkAnswer(form, variants));
-
-  const distractors: string[] = [];
-  for (const form of shuffle(pool)) {
-    if (distractors.length === 3) break;
-    if (!distractors.includes(form)) distractors.push(form);
-  }
+  const distractors = wrongForms(verb, kind, 3);
 
   return { verb, kind, correct, options: shuffle([correct, ...distractors]) };
 }
+
 
 function buildRound(): Question[] {
   return Array.from({ length: ROUND }, buildQuestion);
