@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FiszkiRouteImport } from './routes/fiszki'
 import { Route as PrawdaFalszRouteImport } from './routes/prawda-falsz'
+import { Route as TabelkaRouteImport } from './routes/tabelka'
 import { Route as WybierzRouteImport } from './routes/wybierz'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const PrawdaFalszRoute = PrawdaFalszRouteImport.update({
   path: '/prawda-falsz',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TabelkaRoute = TabelkaRouteImport.update({
+  id: '/tabelka',
+  path: '/tabelka',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WybierzRoute = WybierzRouteImport.update({
   id: '/wybierz',
   path: '/wybierz',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
+  '/tabelka': typeof TabelkaRoute
   '/wybierz': typeof WybierzRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
+  '/tabelka': typeof TabelkaRoute
   '/wybierz': typeof WybierzRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/fiszki': typeof FiszkiRoute
   '/prawda-falsz': typeof PrawdaFalszRoute
+  '/tabelka': typeof TabelkaRoute
   '/wybierz': typeof WybierzRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/fiszki' | '/prawda-falsz' | '/wybierz'
+  fullPaths: '/' | '/fiszki' | '/prawda-falsz' | '/tabelka' | '/wybierz'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fiszki' | '/prawda-falsz' | '/wybierz'
-  id: '__root__' | '/' | '/fiszki' | '/prawda-falsz' | '/wybierz'
+  to: '/' | '/fiszki' | '/prawda-falsz' | '/tabelka' | '/wybierz'
+  id: '__root__' | '/' | '/fiszki' | '/prawda-falsz' | '/tabelka' | '/wybierz'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FiszkiRoute: typeof FiszkiRoute
   PrawdaFalszRoute: typeof PrawdaFalszRoute
+  TabelkaRoute: typeof TabelkaRoute
   WybierzRoute: typeof WybierzRoute
 }
 
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrawdaFalszRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tabelka': {
+      id: '/tabelka'
+      path: '/tabelka'
+      fullPath: '/tabelka'
+      preLoaderRoute: typeof TabelkaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wybierz': {
       id: '/wybierz'
       path: '/wybierz'
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FiszkiRoute: FiszkiRoute,
   PrawdaFalszRoute: PrawdaFalszRoute,
+  TabelkaRoute: TabelkaRoute,
   WybierzRoute: WybierzRoute,
 }
 export const routeTree = rootRouteImport
