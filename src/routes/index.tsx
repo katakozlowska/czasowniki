@@ -170,6 +170,26 @@ function Home() {
                 Start
               </span>
             </Link>
+            <Link
+              to="/sprint"
+              className="flex items-center gap-4 rounded-[28px] bg-paper p-5 shadow-[0_8px_0_var(--sky-dark)] transition-transform active:translate-y-1 active:shadow-[0_4px_0_var(--sky-dark)]"
+            >
+              <span className="grid size-16 shrink-0 place-items-center rounded-2xl bg-sky font-display text-2xl font-bold text-cream shadow-[0_5px_0_var(--sky-dark)]">
+                ⏱️
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-display text-xl leading-tight font-semibold">
+                  Sprint 60 sekund
+                </span>
+                <span className="mt-0.5 block text-sm font-bold text-ink-soft">
+                  Ile zdążysz w minutę?
+                </span>
+              </span>
+              <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-sky-dark">
+                Start
+              </span>
+            </Link>
+
 
             <div className="relative overflow-hidden rounded-[28px] bg-locked p-4 opacity-90">
 
