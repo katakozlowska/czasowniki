@@ -227,6 +227,10 @@ function Sprint() {
                   autoCapitalize="off"
                   autoCorrect="off"
                   spellCheck={false}
+                  onFocus={(event) => {
+                    const el = event.currentTarget;
+                    setTimeout(() => el.scrollIntoView({ block: "center", behavior: "smooth" }), 300);
+                  }}
                   placeholder="wpisz formę…"
                   aria-label="Twoja odpowiedź"
                   className="mt-5 h-16 w-full rounded-2xl bg-paper px-4 text-center font-display text-2xl font-semibold text-ink shadow-[inset_0_3px_0_rgba(0,0,0,0.1)] outline-none focus:ring-4 focus:ring-sun"
