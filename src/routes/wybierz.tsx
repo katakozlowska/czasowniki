@@ -21,7 +21,7 @@ export const Route = createFileRoute("/wybierz")({
       },
     ],
   }),
-  component: WybierzOdpowiedz;
+  component: WybierzOdpowiedz,
 });
 
 const ROUND = 10;
