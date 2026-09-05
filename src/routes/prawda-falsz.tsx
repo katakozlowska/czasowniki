@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { displayForms, verbs, type Verb } from "@/data/verbs";
-import { checkAnswer } from "@/lib/check-answer";
+import { pick, wrongForm } from "@/lib/wrong-forms";
 import { addPoints } from "@/lib/progress";
 import { RoundSummary } from "@/components/round-summary";
 
@@ -33,38 +33,6 @@ type Statement = {
   isTrue: boolean;
 };
 
-function pick<T>(list: T[]): T {
-  return list[Math.floor(Math.random() * list.length)]!;
-}
-
-/** Realistyczna, ale błędna forma czasownika. */
-function fakeForm(verb: Verb, kind: "past" | "participle"): string | null {
-  const variants = kind === "past" ? verb.past : verb.participle;
-  const candidates: string[] = [];
-
-  // 1) dodanie -ed do formy podstawowej (goed, buyed, hitted)
-  const base = verb.base;
-  const last = base.slice(-1);
-  const beforeLast = base.slice(-2, -1);
-  const vowels = "aeiou";
-  let regular = `${base}ed`;
-  if (last === "e") regular = `${base}d`;
-  else if (vowels.includes(beforeLast) && !vowels.includes(last) && !"wxy".includes(last))
-    regular = `${base}${last}ed`;
-  candidates.push(regular);
-
-  // 2) zamiana past simple i past participle miejscami
-  const other = kind === "past" ? verb.participle[0]! : verb.past[0]!;
-  candidates.push(other);
-
-  // 3) forma innego czasownika
-  const another = pick(verbs.filter((item) => item.base !== verb.base));
-  candidates.push(pick([another.past[0]!, another.participle[0]!]));
-
-  const usable = candidates.filter((form) => !checkAnswer(form, variants));
-  return usable.length ? pick(usable) : null;
-}
-
 function buildStatement(): Statement {
   const verb = pick(verbs);
   const kind: "past" | "participle" = Math.random() < 0.5 ? "past" : "participle";
@@ -74,7 +42,7 @@ function buildStatement(): Statement {
   if (wantTrue) {
     return { verb, kind, shown: displayForms(variants), isTrue: true };
   }
-  const fake = fakeForm(verb, kind);
+  const fake = wrongForm(verb, kind);
   if (!fake) return { verb, kind, shown: displayForms(variants), isTrue: true };
   return { verb, kind, shown: fake, isTrue: false };
 }
