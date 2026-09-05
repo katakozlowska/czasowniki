@@ -174,7 +174,7 @@ function Fiszki() {
                 <span className="absolute inset-0 translate-y-2 rounded-[28px] bg-ink/25" />
                 <span className="popin relative flex h-full flex-col items-center justify-center rounded-[28px] bg-cream p-6 text-center shadow-[0_10px_0_var(--sky-dark)]">
                   <span className="mb-3 rounded-full bg-sun/40 px-3 py-1 text-xs font-extrabold text-ink">
-                    {current.pl.split(",")[0]}
+                    czasownik
                   </span>
                   <span className="font-display text-5xl leading-none font-semibold text-ink">
                     {current.base}
