@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { displayForms, verbs, type Verb } from "@/data/verbs";
 import { recordAnswer, weightedSample } from "@/lib/progress";
+import { praise } from "@/lib/text";
 
 export const Route = createFileRoute("/fiszki")({
   head: () => ({
@@ -80,10 +81,10 @@ function Fiszki() {
             </span>
           </div>
           <h1 className="mx-auto max-w-[20ch] font-display text-4xl leading-none font-semibold text-balance">
-            Świetna robota!
+            {praise(known.length, known.length + unknown.length)}
           </h1>
           <p className="mx-auto mt-3 max-w-[32ch] text-sm font-bold text-ink-soft text-pretty">
-            Przeszłaś cały zestaw czasowników. Sprawdź, ile już wiesz.
+            Masz za sobą cały zestaw kart. Zobacz, ile już umiesz.
           </p>
 
           <div className="mt-8 grid grid-cols-2 gap-4">
@@ -136,10 +137,10 @@ function Fiszki() {
         <div className="mb-3 flex items-center justify-between">
           <Link
             to="/"
-            className="grid size-11 place-items-center rounded-2xl bg-cream font-display text-lg font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
+            className="flex h-11 min-h-11 items-center gap-1 rounded-2xl bg-cream px-3 font-display text-sm font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
             aria-label="Wróć do menu"
           >
-            ←
+            ← Menu
           </Link>
           <div className="flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.15)]">
             <span className="font-display text-sm font-semibold text-ink-soft">Fiszki</span>

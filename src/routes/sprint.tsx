@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { verbs, type Verb } from "@/data/verbs";
 import { checkAnswer } from "@/lib/check-answer";
+import { praise } from "@/lib/text";
 import { getSprintBest, recordAnswer, setSprintBest, weightedVerb } from "@/lib/progress";
 
 export const Route = createFileRoute("/sprint")({
@@ -111,7 +112,7 @@ function Sprint() {
           </div>
           <h1 className="font-display text-4xl leading-none font-semibold">Czas minął!</h1>
           <p className="mt-3 text-sm font-bold text-ink-soft">
-            {record ? "Nowy rekord! Świetna robota." : "Spróbuj pobić swój rekord."}
+            {record ? "Nowy rekord! Świetna robota." : praise(score, 15)}
           </p>
 
           <div className="mt-8 grid grid-cols-2 gap-4">
@@ -129,7 +130,6 @@ function Sprint() {
             </div>
           </div>
 
-          <p className="mt-6 font-display text-lg font-semibold">Twój rekord: {best}</p>
 
           <button
             onClick={start}
@@ -156,10 +156,10 @@ function Sprint() {
         <div className="mb-5 flex items-center justify-between">
           <Link
             to="/"
-            className="grid size-11 place-items-center rounded-2xl bg-cream font-display text-lg font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
+            className="flex h-11 min-h-11 items-center gap-1 rounded-2xl bg-cream px-3 font-display text-sm font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
             aria-label="Wróć do menu"
           >
-            ←
+            ← Menu
           </Link>
           <div className="rounded-full bg-cream/95 px-4 py-2 font-display text-sm font-semibold text-ink-soft shadow-[0_4px_0_rgba(0,0,0,0.15)]">
             Rekord: {best}
@@ -176,7 +176,7 @@ function Sprint() {
               danger ? "text-cream/80" : "text-ink-soft"
             }`}
           >
-            Zostało sekund
+            Czas
           </p>
           <p
             className={`font-display text-7xl leading-none font-semibold tabular-nums ${
@@ -194,7 +194,7 @@ function Sprint() {
           <div className="rounded-[28px] bg-cream p-6 text-center shadow-[0_8px_0_var(--sky-dark)]">
             <p className="font-display text-2xl font-semibold text-ink">Sprint 60 sekund</p>
             <p className="mt-2 text-sm font-bold text-ink-soft">
-              Wpisuj formę i naciskaj Enter. Ile zdążysz w minutę?
+              Wpisz formę i naciśnij Enter. Ile zdążysz w minutę?
             </p>
             <button
               onClick={start}
@@ -227,6 +227,10 @@ function Sprint() {
                   autoCapitalize="off"
                   autoCorrect="off"
                   spellCheck={false}
+                  onFocus={(event) => {
+                    const el = event.currentTarget;
+                    setTimeout(() => el.scrollIntoView({ block: "center", behavior: "smooth" }), 300);
+                  }}
                   placeholder="wpisz formę…"
                   aria-label="Twoja odpowiedź"
                   className="mt-5 h-16 w-full rounded-2xl bg-paper px-4 text-center font-display text-2xl font-semibold text-ink shadow-[inset_0_3px_0_rgba(0,0,0,0.1)] outline-none focus:ring-4 focus:ring-sun"

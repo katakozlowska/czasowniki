@@ -1,4 +1,6 @@
+import { useMemo } from "react";
 import { Link } from "@tanstack/react-router";
+import { praise } from "@/lib/text";
 
 type Props = {
   correct: number;
@@ -9,6 +11,7 @@ type Props = {
 
 export function RoundSummary({ correct, total, points, onRestart }: Props) {
   const wrong = total - correct;
+  const cheer = useMemo(() => praise(correct, total), [correct, total]);
 
   return (
     <div className="min-h-screen bg-cream text-ink antialiased">
@@ -20,10 +23,10 @@ export function RoundSummary({ correct, total, points, onRestart }: Props) {
           </span>
         </div>
         <h1 className="mx-auto max-w-[20ch] font-display text-4xl leading-none font-semibold text-balance">
-          Koniec rundy!
+          {cheer}
         </h1>
         <p className="mx-auto mt-3 max-w-[32ch] text-sm font-bold text-ink-soft text-pretty">
-          Twój wynik: {correct} z {total} poprawnych odpowiedzi.
+          Koniec rundy. Twój wynik to {correct} z {total} poprawnych odpowiedzi.
         </p>
 
         <div className="mt-8 grid grid-cols-2 gap-4">
@@ -50,7 +53,7 @@ export function RoundSummary({ correct, total, points, onRestart }: Props) {
             onClick={onRestart}
             className="h-16 w-full rounded-2xl bg-coral font-display text-lg font-semibold text-cream shadow-[0_6px_0_var(--coral-dark)] transition-transform active:translate-y-1 active:shadow-[0_2px_0_var(--coral-dark)]"
           >
-            Zagraj jeszcze raz
+            Jeszcze raz
           </button>
           <Link
             to="/"

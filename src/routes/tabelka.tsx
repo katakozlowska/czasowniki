@@ -142,9 +142,9 @@ function Tabelka() {
           <Link
             to="/"
             aria-label="Wróć do menu"
-            className="grid size-11 place-items-center rounded-2xl bg-cream font-display text-lg font-bold text-sky-dark shadow-[0_4px_0_var(--sky-dark)]"
+            className="flex h-11 min-h-11 items-center gap-1 rounded-2xl bg-cream px-3 font-display text-sm font-bold text-sky-dark shadow-[0_4px_0_var(--sky-dark)]"
           >
-            ←
+            ← Menu
           </Link>
           <div className="flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.15)]">
             <span className="font-display text-sm font-semibold text-ink-soft">Tabelka</span>
@@ -205,6 +205,10 @@ function Tabelka() {
                         autoCapitalize="none"
                         autoCorrect="off"
                         spellCheck={false}
+                        onFocus={(event) => {
+                          const el = event.currentTarget;
+                          setTimeout(() => el.scrollIntoView({ block: "center", behavior: "smooth" }), 300);
+                        }}
                         enterKeyHint={isLast ? "done" : "next"}
                         placeholder={field === "pl" ? "po polsku…" : "wpisz…"}
                         className={`h-14 w-full rounded-2xl px-4 font-display text-xl font-semibold text-ink outline-none ${

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { verbs } from "@/data/verbs";
 import { loadProgress, type Progress } from "@/lib/progress";
 import { activeProfile, type Profile } from "@/lib/profiles";
+import { verbCount, dayCount } from "@/lib/text";
 import { ProfilePicker } from "@/components/profile-gate";
 
 export const Route = createFileRoute("/")({
@@ -72,7 +73,8 @@ function Home() {
                 <h1 className="font-display text-2xl font-semibold leading-none">
                   {profile?.name ?? "Czasowniki"}
                 </h1>
-                <p className="mt-1 text-xs font-bold text-ink-soft">Zmień profil</p>
+                <p className="mt-1 text-xs font-bold text-ink-soft">Ucz się czasowników nieregularnych</p>
+                <p className="text-xs font-bold text-ink-soft/70">Dotknij, aby zmienić profil</p>
               </div>
             </button>
             <span className="grid size-12 place-items-center rounded-full bg-mint font-display text-xl font-bold text-cream shadow-[0_4px_0_var(--mint-dark)]">
@@ -94,7 +96,7 @@ function Home() {
               </p>
               <p className="mt-1 flex items-center gap-1 font-display text-2xl leading-none font-semibold text-cream">
                 <span className="text-2xl">🔥</span>
-                {progress.streak} {progress.streak === 1 ? "dzień" : "dni"} z rzędu
+                {dayCount(progress.streak)} z rzędu
               </p>
             </div>
           </div>
@@ -118,11 +120,11 @@ function Home() {
             <span className="min-w-0 flex-1">
               <span className="block font-display text-xl leading-tight font-semibold">Fiszki</span>
               <span className="mt-0.5 block text-sm font-bold text-ink-soft">
-                Przećwicz {verbs.length} czasowników
+                Przećwicz {verbCount(verbs.length)}
               </span>
             </span>
             <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-coral-dark">
-              Start
+              Zaczynam
             </span>
           </Link>
 
@@ -143,7 +145,7 @@ function Home() {
                 </span>
               </span>
               <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-mint-dark">
-                Start
+                Zaczynam
               </span>
             </Link>
 
@@ -163,7 +165,7 @@ function Home() {
                 </span>
               </span>
               <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-sun-dark">
-                Start
+                Zaczynam
               </span>
             </Link>
 
@@ -184,7 +186,7 @@ function Home() {
                 </span>
               </span>
               <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-sky-dark">
-                Start
+                Zaczynam
               </span>
             </Link>
 
@@ -204,7 +206,7 @@ function Home() {
                 </span>
               </span>
               <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-mint-dark">
-                Start
+                Zaczynam
               </span>
             </Link>
             <Link
@@ -223,17 +225,9 @@ function Home() {
                 </span>
               </span>
               <span className="rounded-full bg-cream px-3 py-1 text-xs font-extrabold text-sky-dark">
-                Start
+                Zaczynam
               </span>
             </Link>
-
-
-            <div className="relative overflow-hidden rounded-[28px] bg-locked p-4 opacity-90">
-
-              <p className="font-display text-base font-semibold text-ink-soft">Więcej ćwiczeń</p>
-              <p className="mt-0.5 text-xs font-bold text-ink-soft/70">Wkrótce</p>
-              <span className="absolute right-3 bottom-3 text-lg">🔒</span>
-            </div>
 
           </div>
 
