@@ -125,7 +125,7 @@ function Sortowanie() {
             aria-label="Wróć do menu"
             className="grid size-11 place-items-center rounded-2xl bg-cream font-display text-lg font-bold text-mint-dark shadow-[0_4px_0_var(--mint-dark)]"
           >
-            ←
+            ← Menu
           </Link>
           <div className="flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.15)]">
             <span className="font-display text-sm font-semibold text-ink-soft">Sortowanie</span>

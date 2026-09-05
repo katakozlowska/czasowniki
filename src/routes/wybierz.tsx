@@ -108,10 +108,10 @@ function WybierzOdpowiedz() {
         <div className="mb-3 flex items-center justify-between">
           <Link
             to="/"
-            className="grid size-11 place-items-center rounded-2xl bg-cream font-display text-lg font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
+            className="flex h-11 min-h-11 items-center gap-1 rounded-2xl bg-cream px-3 font-display text-sm font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
             aria-label="Wróć do menu"
           >
-            ←
+            ← Menu
           </Link>
           <div className="flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 shadow-[0_4px_0_rgba(0,0,0,0.15)]">
             <span className="font-display text-sm font-semibold text-ink-soft">Wybierz</span>
@@ -147,10 +147,10 @@ function WybierzOdpowiedz() {
                 let tone =
                   "bg-cream text-ink shadow-[0_6px_0_rgba(0,0,0,0.15)] active:translate-y-1 active:shadow-[0_2px_0_rgba(0,0,0,0.15)]";
                 if (answered && isCorrect)
-                  tone = "bg-mint text-cream shadow-[0_6px_0_var(--mint-dark)]";
+                  tone = "bg-mint text-cream ring-4 ring-mint-dark shadow-[0_6px_0_var(--mint-dark)]";
                 else if (answered && isChosen)
-                  tone = "bg-coral text-cream shadow-[0_6px_0_var(--coral-dark)]";
-                else if (answered) tone = "bg-cream/70 text-ink-soft shadow-[0_6px_0_rgba(0,0,0,0.1)]";
+                  tone = "bg-coral text-cream ring-4 ring-coral-dark shadow-[0_6px_0_var(--coral-dark)]";
+                else if (answered) tone = "bg-cream/40 text-ink-soft/60 shadow-[0_6px_0_rgba(0,0,0,0.08)]";
 
                 return (
                   <button
@@ -168,7 +168,7 @@ function WybierzOdpowiedz() {
             {answered && (
               <div className="popin mt-6 rounded-2xl bg-cream/95 px-4 py-4 text-center shadow-[0_6px_0_var(--mint-dark)]">
                 <p className="font-display text-lg font-semibold text-ink">
-                  {wasRight ? "Brawo! 🎉" : `Poprawnie: ${current.correct}`}
+                  {wasRight ? "Brawo! 🎉" : `Poprawna odpowiedź: ${current.correct}`}
                 </p>
                 <button
                   onClick={next}

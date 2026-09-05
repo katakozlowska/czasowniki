@@ -62,7 +62,7 @@ function Postepy() {
             className="grid size-11 place-items-center rounded-2xl bg-paper font-display text-lg font-bold text-coral shadow-[0_4px_0_var(--coral-dark)]"
             aria-label="Wróć do menu"
           >
-            ←
+            ← Menu
           </Link>
           <p className="font-display text-xl font-semibold">Moje postępy</p>
           <span className="size-11" />
